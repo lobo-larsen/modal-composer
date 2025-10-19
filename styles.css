@@ -22,6 +22,21 @@
     --danger: #ef4444;
 }
 
+/* Light Theme */
+body.light-theme {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #e9ecef;
+    --bg-elevated: #ffffff;
+    --border: #dee2e6;
+    --text-primary: #212529;
+    --text-secondary: #495057;
+    --text-muted: #6c757d;
+    --accent: #0d6efd;
+    --accent-hover: #0b5ed7;
+    --accent-dim: rgba(13, 110, 253, 0.1);
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'SF Pro Display', system-ui, sans-serif;
     background: var(--bg-primary);
@@ -46,6 +61,9 @@ header {
     background: var(--bg-primary);
     border-bottom: 1px solid var(--border);
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 header h1 {
@@ -53,10 +71,54 @@ header h1 {
     font-weight: 700;
     letter-spacing: -0.03em;
     color: var(--text-primary);
+}
+
+body.light-theme header h1 {
+    background: linear-gradient(135deg, #212529 0%, #495057 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+body:not(.light-theme) header h1 {
     background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--accent);
+    transform: scale(1.05);
+}
+
+.theme-toggle:active {
+    transform: scale(0.95);
+}
+
+.theme-icon {
+    font-size: 1.3rem;
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover .theme-icon {
+    transform: rotate(20deg);
 }
 
 /* Tab Navigation */
@@ -259,6 +321,34 @@ header h1 {
     color: #666666;
 }
 
+/* Light theme chord adjustments */
+body.light-theme .major-chord {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-color: #495057;
+}
+
+body.light-theme .major-chord .chord-name {
+    color: #212529;
+}
+
+body.light-theme .minor-chord {
+    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+    border-color: #adb5bd;
+}
+
+body.light-theme .minor-chord .chord-name {
+    color: #495057;
+}
+
+body.light-theme .diminished-chord {
+    background: #f8f9fa;
+    border-color: #ced4da;
+}
+
+body.light-theme .diminished-chord .chord-name {
+    color: #6c757d;
+}
+
 /* Characteristic Chord */
 .characteristic {
     background: linear-gradient(135deg, var(--accent) 0%, #2563eb 100%) !important;
@@ -291,6 +381,12 @@ header h1 {
     font-weight: 900;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
     z-index: 10;
+}
+
+body.light-theme .characteristic .star {
+    background: #212529;
+    color: #ffc107;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Analyzer Tab */

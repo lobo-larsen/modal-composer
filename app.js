@@ -524,10 +524,44 @@ function analyzeProgression() {
     });
 }
 
+// Theme toggle functionality
+function initThemeToggle() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = themeToggle.querySelector('.theme-icon');
+    
+    // Check for saved theme preference or default to dark
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+    
+    if (currentTheme === 'light') {
+        document.body.classList.add('light-theme');
+        themeIcon.textContent = '☀️';
+    }
+    
+    // Toggle theme on button click
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('light-theme');
+        
+        const isLight = document.body.classList.contains('light-theme');
+        themeIcon.textContent = isLight ? '☀️' : '🌙';
+        
+        // Save preference
+        localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        
+        // Add rotation animation
+        themeIcon.style.transform = 'rotate(360deg)';
+        setTimeout(() => {
+            themeIcon.style.transform = 'rotate(0deg)';
+        }, 300);
+    });
+}
+
 // Initialize the app
 function init() {
     const tonalitySelector = document.getElementById('tonality');
     const progressionKeySelector = document.getElementById('progression-key');
+    
+    // Initialize theme toggle
+    initThemeToggle();
     
     // Initialize tabs
     initTabs();
