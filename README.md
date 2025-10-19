@@ -1,6 +1,6 @@
 # Modal Composer
 
-A d web application for exploring musical modes and analyzing chord progressions. Built for composers, songwriters, and music theory enthusiasts 
+A web application for exploring musical modes and analyzing chord progressions. Built for composers, songwriters, and music theory enthusiasts 
 
 ## Features
 
