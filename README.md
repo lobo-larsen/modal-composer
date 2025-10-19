@@ -1,6 +1,6 @@
 # Modal Composer
 
-An ultra-modern, dark-themed web application for exploring musical modes and analyzing chord progressions. Built for composers, songwriters, and music theory enthusiasts who want powerful tools in a beautiful interface.
+A d web application for exploring musical modes and analyzing chord progressions. Built for composers, songwriters, and music theory enthusiasts 
 
 ## Features
 
@@ -25,15 +25,7 @@ An ultra-modern, dark-themed web application for exploring musical modes and ana
 - **Interval Relationships**: Shows I, ii, V, etc. for each chord
 - **Borrowed Chord Detection**: Highlights chords that don't belong to the key
 - **Copy-Ready Formula**: Get your progression formula (e.g., I - vi - IV - V)
-
-### Design
-- **Dark Theme**: Beautiful dark UI optimized for long composing sessions
-- **Ultra-Modern**: Gradients, shadows, and smooth animations throughout
-- **Blue Accents**: High-contrast blue highlights for important elements
-- **Mobile-First**: Optimized for iPhone 14 Pro with responsive desktop layout
-- **Touch-Friendly**: Large tap targets, hover effects, and buttery-smooth interactions
-- **Glassmorphism**: Subtle transparency and layering effects
-
+  
 ## How to Use
 
 ### Mode Explorer
