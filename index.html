@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal Composer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Modal Composer</h1>
+        </header>
+
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="explorer">Explorer</button>
+            <button class="tab-btn" data-tab="analyzer">Analyzer</button>
+            <button class="tab-btn" data-tab="progression">Progression</button>
+        </nav>
+
+        <!-- Explorer Tab -->
+        <div id="explorer-tab" class="tab-content active">
+            <div class="key-selector">
+                <select id="tonality">
+                    <option value="C">C</option>
+                    <option value="C#">C# / Db</option>
+                    <option value="D">D</option>
+                    <option value="D#">D# / Eb</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
+                    <option value="F#">F# / Gb</option>
+                    <option value="G">G</option>
+                    <option value="G#">G# / Ab</option>
+                    <option value="A">A</option>
+                    <option value="A#">A# / Bb</option>
+                    <option value="B">B</option>
+                </select>
+            </div>
+            <div id="modes-container" class="modes-container">
+                <!-- All modes will be dynamically inserted here -->
+            </div>
+        </div>
+
+        <!-- Analyzer Tab -->
+        <div id="analyzer-tab" class="tab-content">
+            <div class="analyzer-section">
+                <h3>Select Chords</h3>
+                <div id="chord-picker" class="chord-picker">
+                    <!-- Chord buttons will be dynamically inserted here -->
+                </div>
+            </div>
+            <div class="analyzer-section">
+                <h3>Results</h3>
+                <div id="analysis-results" class="analysis-results">
+                    <p class="placeholder">Tap chords above to discover<br>possible keys and modes</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progression Tab -->
+        <div id="progression-tab" class="tab-content">
+            <div class="analyzer-section">
+                <h3>Your Progression</h3>
+                <div id="progression-picker" class="chord-picker">
+                    <!-- Chord buttons will be dynamically inserted here -->
+                </div>
+            </div>
+            <div class="analyzer-section">
+                <h3>Analyze in Key</h3>
+                <div class="key-selector-inline">
+                    <select id="progression-key">
+                        <option value="C">C</option>
+                        <option value="C#">C# / Db</option>
+                        <option value="D">D</option>
+                        <option value="D#">D# / Eb</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                        <option value="F#">F# / Gb</option>
+                        <option value="G">G</option>
+                        <option value="G#">G# / Ab</option>
+                        <option value="A">A</option>
+                        <option value="A#">A# / Bb</option>
+                        <option value="B">B</option>
+                    </select>
+                </div>
+            </div>
+            <div class="analyzer-section">
+                <h3>Roman Numeral Analysis</h3>
+                <div id="progression-results" class="progression-results">
+                    <p class="placeholder">Select chords and a key<br>to see Roman numeral analysis</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
