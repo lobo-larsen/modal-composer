@@ -6,6 +6,84 @@ const noteAliases = {
     'C#': 'Db', 'D#': 'Eb', 'F#': 'Gb', 'G#': 'Ab', 'A#': 'Bb'
 };
 
+// Audio Context for playing chords
+let audioContext = null;
+
+// Initialize audio context (lazy initialization to avoid autoplay issues)
+function getAudioContext() {
+    if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    return audioContext;
+}
+
+// Convert note to frequency (A4 = 440Hz)
+function noteToFrequency(note, octave = 4) {
+    const noteIndex = notes.indexOf(note);
+    const A4 = 440;
+    const semitonesFromA4 = noteIndex - 9 + (octave - 4) * 12;
+    return A4 * Math.pow(2, semitonesFromA4 / 12);
+}
+
+// Get notes in a chord
+function getChordNotes(chordName) {
+    // Extract root note and quality
+    const root = chordName.replace(/m|°/g, '');
+    const rootIndex = notes.indexOf(root);
+    
+    if (rootIndex === -1) return [];
+    
+    let intervals;
+    if (chordName.includes('°')) {
+        // Diminished: root, minor 3rd, diminished 5th
+        intervals = [0, 3, 6];
+    } else if (chordName.includes('m')) {
+        // Minor: root, minor 3rd, perfect 5th
+        intervals = [0, 3, 7];
+    } else {
+        // Major: root, major 3rd, perfect 5th
+        intervals = [0, 4, 7];
+    }
+    
+    return intervals.map(interval => {
+        const noteIndex = (rootIndex + interval) % 12;
+        return notes[noteIndex];
+    });
+}
+
+// Play a chord
+function playChord(chordName) {
+    const ctx = getAudioContext();
+    const now = ctx.currentTime;
+    const duration = 1.2; // seconds
+    
+    const chordNotes = getChordNotes(chordName);
+    
+    chordNotes.forEach((note, index) => {
+        // Create oscillator for each note
+        const oscillator = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+        
+        // Use different octaves for better sound
+        const octave = index === 0 ? 3 : 4; // Root lower, others higher
+        const frequency = noteToFrequency(note, octave);
+        
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(frequency, now);
+        
+        // Envelope: attack and decay
+        gainNode.gain.setValueAtTime(0, now);
+        gainNode.gain.linearRampToValueAtTime(0.15, now + 0.05); // Attack
+        gainNode.gain.exponentialRampToValueAtTime(0.01, now + duration); // Decay
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(ctx.destination);
+        
+        oscillator.start(now);
+        oscillator.stop(now + duration);
+    });
+}
+
 // Mode definitions with characteristic chords
 // Roman numerals indicate scale degrees, characteristic chords are marked
 const modes = [
@@ -131,7 +209,7 @@ function renderModeRow(tonality, mode) {
     const shortName = mode.name.split(' ')[0]; // Get first word only
     
     const chordsHTML = chords.map(chord => `
-        <div class="chord ${chord.chordClass} ${chord.isCharacteristic ? 'characteristic' : ''}">
+        <div class="chord ${chord.chordClass} ${chord.isCharacteristic ? 'characteristic' : ''}" data-chord="${chord.name}">
             <div class="chord-name">${chord.name}</div>
             ${chord.isCharacteristic ? '<div class="star">★</div>' : ''}
         </div>
@@ -152,6 +230,14 @@ function renderAllModes(tonality) {
     const container = document.getElementById('modes-container');
     const modesHTML = modes.map(mode => renderModeRow(tonality, mode)).join('');
     container.innerHTML = modesHTML;
+    
+    // Add click handlers for audio playback
+    document.querySelectorAll('#modes-container .chord').forEach(chordEl => {
+        chordEl.addEventListener('click', (e) => {
+            const chordName = e.currentTarget.dataset.chord;
+            playChord(chordName);
+        });
+    });
 }
 
 // Generate all possible chords for the picker
@@ -187,6 +273,7 @@ function renderChordPicker() {
     document.querySelectorAll('.chord-picker-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const chord = e.target.dataset.chord;
+            playChord(chord); // Play sound
             if (selectedChords.has(chord)) {
                 selectedChords.delete(chord);
             } else {
@@ -379,6 +466,7 @@ function renderProgressionPicker() {
     document.querySelectorAll('#progression-picker .chord-picker-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const chord = e.target.dataset.chord;
+            playChord(chord); // Play sound
             const index = progressionChords.indexOf(chord);
             
             if (index > -1) {
@@ -426,6 +514,14 @@ function analyzeProgression() {
             <p class="progression-formula">${progressionChords.map(c => getChordRomanNumeral(c, progressionKey)).join(' - ')}</p>
         </div>
     `;
+    
+    // Add click handlers for audio playback on progression chords
+    document.querySelectorAll('.progression-chord').forEach(chordEl => {
+        chordEl.addEventListener('click', (e) => {
+            const chordName = e.currentTarget.querySelector('.prog-chord-name').textContent;
+            playChord(chordName);
+        });
+    });
 }
 
 // Initialize the app

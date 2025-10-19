@@ -564,11 +564,13 @@ header h1 {
     text-align: center;
     transition: all 0.2s ease;
     position: relative;
+    cursor: pointer;
 }
 
 .progression-chord:hover {
     background: var(--bg-tertiary);
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .progression-chord.borrowed {
